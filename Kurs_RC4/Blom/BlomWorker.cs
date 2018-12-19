@@ -8,7 +8,7 @@ namespace Kurs_RC4.Blom
 {
     public class BlomWorker
     {
-        public const int Mod = 17;
+        public const int Mod = 30;
 
         private List<MatrixElement> _secretMatrix = new List<MatrixElement>
         {

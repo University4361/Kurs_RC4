@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Kurs_RC4
+namespace Kurs_RC4.Algo
 {
     public class RC4
     {
@@ -10,10 +10,10 @@ namespace Kurs_RC4
 
         public RC4(byte[] key)
         {
-            init(key);
+            Init(key);
         }
 
-        private void init(byte[] key)
+        private void Init(byte[] key)
         {
             int keyLength = key.Length;
 
@@ -30,7 +30,7 @@ namespace Kurs_RC4
             }
         }
 
-        private byte keyItem()
+        private byte KeyItem()
         {
             x = (x + 1) % 256;
             y = (y + S[x]) % 256;
@@ -48,7 +48,7 @@ namespace Kurs_RC4
 
             for (int m = 0; m < data.Length; m++)
             {
-                cipher[m] = (byte)(data[m] ^ keyItem());
+                cipher[m] = (byte)(data[m] ^ KeyItem());
             }
 
             return cipher;

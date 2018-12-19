@@ -1,4 +1,5 @@
-﻿using Kurs_RC4.Blom;
+﻿using Kurs_RC4.Algo;
+using Kurs_RC4.Blom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,13 +42,6 @@ namespace Kurs_RC4
         {
             PrivateKey = blomWorker.GetPrivateKey(); // get key by Blom
 
-            string privateKeyStr = string.Empty;
-
-            foreach (var item in PrivateKey)
-            {
-                privateKeyStr += $"{item.Value}{item.X}{item.Y}";
-            }
-
             string privateStr = string.Empty;
 
             foreach (var item in PrivateKey)
@@ -58,12 +52,26 @@ namespace Kurs_RC4
             Console.WriteLine($"User {Name} has private key: {privateStr}");
         }
 
+        private void ShowSessionKey(byte[] sessionKey)
+        {
+            string sessionKeyStr = string.Empty;
+
+            foreach (var item in sessionKey)
+            {
+                sessionKeyStr += $"{item} ";
+            }
+
+            Console.WriteLine($"Session key for {Name} : {sessionKeyStr}");
+        }
+
         public void SendMessageTo(User toUser, string message)
         {
             Console.WriteLine($"{Name} send message '{message}' to {toUser.Name}");
 
             var sessionKey = MatrixHelper.PowRowOnColumn(PrivateKey, toUser.UserId, BlomWorker.Mod);
             byte[] sessionKeyBytes = Encoding.ASCII.GetBytes(sessionKey.ToString());
+
+            ShowSessionKey(sessionKeyBytes);
 
             RC4 encoder = new RC4(sessionKeyBytes);
             string messageStr = message;
@@ -84,6 +92,8 @@ namespace Kurs_RC4
         {
             var sessionKey = MatrixHelper.PowRowOnColumn(PrivateKey, id, BlomWorker.Mod);
             byte[] sessionKeyBytes = Encoding.ASCII.GetBytes(sessionKey.ToString());
+
+            ShowSessionKey(sessionKeyBytes);
 
             RC4 decoder = new RC4(sessionKeyBytes);
             byte[] decryptedBytes = decoder.Decode(message, message.Length);

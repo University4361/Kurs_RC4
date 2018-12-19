@@ -77,7 +77,7 @@ namespace Kurs_RC4
                     Y = 2,
                     Value = 15
                 },
-            }, "Deniska");
+            }, "Denis");
 
             Console.WriteLine();
 
@@ -85,7 +85,7 @@ namespace Kurs_RC4
 
             Console.WriteLine();
 
-            Julia.SendMessageTo(Ilya, "Kak detki Ilya?");
+            Julia.SendMessageTo(Ilya, "Ilya, kak dela na rabote?");
 
             Console.WriteLine();
 
